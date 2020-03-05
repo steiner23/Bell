@@ -1,0 +1,66 @@
+﻿@model Bell.ViewModels.Borrow.BorrowListViewModel
+
+@if (Model.TextColorRed == false)
+{
+    <div class="alert alert-success col-12">
+        <strong>@Model.LoanMessage</strong>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger col-12">
+        <strong>@Model.LoanMessage</strong>
+    </div>
+}
+
+
+@if (Model.UserLoanedBooks.Count > 0)
+{
+    <hr />
+    <h4 class="textBackground col-12" style="color: black">My Loans</h4>
+
+    @foreach (var loanBook in Model.UserLoanedBooks)
+    {
+        <div class="container-fluid col-sm-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="backgroundWhite border border-secondary rounded figure-img">
+
+                @await Html.PartialAsync("BookInformation", loanBook,
+                    new ViewDataDictionary(ViewData) { { "Ctrl", "Borrow" }, { "Act1", "BorrowList" }, 
+                        { "Act2", "BorrowDetails" } })
+
+                <h6 class="booklabels" style="display: inline; background-color: #f17f84;">Your Loan</h6>
+            </div>
+        </div>
+    }
+}
+
+<hr />
+<h4 class="textBackground col-12" style="color:black">Available Books</h4>
+
+<div class="container-fluid col-12">
+    <div class="backgroundWhite border border-secondary rounded figure-img">
+        @await Html.PartialAsync("SearchBooks",
+            new ViewDataDictionary(ViewData) { { "Ctrl", "Borrow" }, { "Act1", "BorrowList" }, 
+                { "Act2", "BorrowDetails"} })
+    </div>
+</div>
+
+@foreach (var book in Model.AvailableBooks)
+{
+    <div class="container-fluid col-sm-12 col-md-6 col-lg-3 col-xl-3">
+        <div class="backgroundWhite border border-secondary rounded figure-img">
+
+            @await Html.PartialAsync("BookInformation", book,
+                new ViewDataDictionary(ViewData) { { "Ctrl", "Borrow" }, { "Act1", "BorrowDetails" }, 
+                    { "Act2", "BorrowDetails" } })
+
+            <form asp-controller="Borrow" asp-action="BorrowList" method="POST">
+                <input type="hidden" id="bookIdent" name="bookIdent" value=@book.BookIdent />
+                <button type="submit" style="display: inline; background-color: #90EE90;">Borrow</button>
+            </form>
+
+        </div>
+    </div>
+}
+
+

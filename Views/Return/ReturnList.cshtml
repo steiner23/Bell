@@ -1,0 +1,55 @@
+﻿@using Bell.Models.Books
+@using Microsoft.AspNetCore.Routing.Constraints
+@model Bell.ViewModels.Return.ReturnViewModel
+
+<div class="alert alert-success col-12">
+    <strong>@Model.LoanMessage</strong>
+</div>
+
+@{
+    foreach (var loan in Model.LoanReturnList)
+    {
+        <div class="container-fluid col-sm-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="backgroundWhite border border-secondary rounded figure-img">
+
+                @{
+                    Book localBook = new Book
+                    {
+                        BookIdent = loan.BookIdent,
+                        Name = loan.Name,
+                        Author = loan.Author,
+                        Description = loan.Description,
+                        BookCoverThumbnailUrl = loan.BookCoverThumbnailUrl
+                    };
+                }
+
+                @await Html.PartialAsync("BookInformation", localBook,
+                    new ViewDataDictionary(ViewData) {{"Ctrl", "Return"}, { "Act1", "ReturnList" }, {"Act2", "ReturnDetails"}} )
+
+                @{
+                    DateTime newDate = loan.ScheduleReturnDate;
+                    newDate = new DateTime(newDate.Ticks - (newDate.Ticks % TimeSpan.TicksPerSecond), newDate.Kind);
+                    string truncDate = newDate.ToString("dd/MM/yyyy");
+                }
+                
+                @if (loan.ScheduleReturnDate > DateTime.Now)
+                {
+
+                    <h6 class="booklabels" style="display: inline; background-color: #90EE90;">Return Date: @truncDate</h6>
+                }
+                else
+                {
+                    <h6 class="booklabels" style="display: inline; background-color: #f17f84;">Overdue: @truncDate</h6>
+                }
+
+                <form asp-controller="Return" asp-action="ReturnList" method="POST">
+                    <input type="hidden" id="bookIdent" name="bookIdent" value=@loan.BookIdent />
+                    <button type="submit" style="display: inline; background-color: #90EE90;">Return</button>
+                </form>
+
+            </div>
+        </div>
+    }
+}
+ 
+

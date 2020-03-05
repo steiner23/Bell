@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/Animate.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>    
+    <script src="~/lib/popper.js/umd/popper.min.js"></script>
+    <script src="~/js/site.js"></script>
+</head>
+<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+    <nav class="navbar navbar-expand-md site-navbar navbar-light bg-dark fixed-top" id="pb-navbar">
+        <div class="container">
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand">
+                <img src="~/content/images/brand10.png" alt="BELL logo" asp-append-version="true"/>
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample09" style="font-size: 20px">
+                <ul class="navbar-nav">
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-link mx-auto" style="color: #FFFFFF">Hello @UserManager.GetUserName(User)!</li>
+                    }
+
+                    <li class="nav-link mx-auto"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-link mx-auto"><a asp-controller="Peruse" asp-action="PeruseList">Browse</a></li>
+                    <li class="nav-link mx-auto"><a asp-controller="Borrow" asp-action="BorrowList">Borrow</a></li>
+                    <li class="nav-link mx-auto"><a asp-controller="Loan" asp-action="LoanList">My Loans</a></li>
+                    <li class="nav-link mx-auto"><a asp-controller="Renew" asp-action="RenewList">Renew</a></li>
+                    <li class="nav-link mx-auto"><a asp-controller="Return" asp-action="ReturnList">Return</a></li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-link mx-auto"><a asp-controller="Admin" asp-action="Index">Admin</a></li>
+                        }
+                    }
+
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item mx-auto" style="font-size: 20px">
+                            <a class="nav-link" style="color: #007BFF; font-size: 20px" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        </li>
+                        <li class="nav-item mx-auto" style="font-size: 20px">
+                            <a class="nav-link" style="color: #007BFF; font-size: 20px" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                    }
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item mx-auto">
+                            <form id="logoutForm" class="form-inline mx-auto" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+                                <button id="logout" type="submit" class="nav-link btn btn-link" style="color: #007BFF; font-size: 20px">Logout</button>
+                            </form>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2 id="welcometitle">Welcome to the Brussels English Language Library</h2>
+    </div>
+    <div class="container body-content bottomMargin">
+        <div class="row">
+            @RenderBody()
+        </div>
+    </div>
+    @RenderSection("Scripts", required: false)
+<div>
+    <footer class="fixed-bottom">
+        <small>Copyright &copy Bell - Brussels English Language Library</small>
+    </footer>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,46 @@
+﻿@model Bell.ViewModels.Search.SearchViewModel
+
+<div class="container-fluid col-12">
+    <div class="backgroundWhite border border-secondary rounded figure-img">
+        @await Html.PartialAsync("SearchBooks",
+            new ViewDataDictionary(ViewData) {{"Ctrl", "Peruse"}, { "Act1", "PeruseList" }, { "Act2", "PeruseDetails"}} )
+    </div>
+</div>
+
+@if (Model.BooksWithAvailibilities.Count > 0)
+{
+    @foreach (var localBook in Model.BooksWithAvailibilities)
+    {
+        <div class="container-fluid col-sm-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="backgroundWhite border border-secondary rounded figure-img">
+
+                @await Html.PartialAsync("BookInformation", localBook.Book,
+                    new ViewDataDictionary(ViewData) { { "Ctrl", Model.Ctrl }, { "Act1", Model.Act1 }, { "Act2", Model.Act2 } })
+
+                @if ((localBook.Available == true) && (Model.Ctrl.Equals("Peruse")))
+                {
+                    <h6 class="booklabels" style="display: inline; background-color: #90EE90;">Available</h6>
+                }
+                else if ((localBook.Available == true) && (Model.Ctrl.Equals("Borrow")))
+                {
+                    <form asp-controller="Borrow" asp-action="BorrowList" method="POST">
+                        <input type="hidden" id="bookIdent" name="bookIdent" value=@localBook.Book.BookIdent />
+                        <button type="submit" ondblclick="this.disabled=true;" style="display: inline; background-color: #90EE90;">Borrow</button>
+                    </form>
+                }
+                else
+                {
+                <h6 class="booklabels" style="display: inline; background-color: #f17f84;">Out On Loan</h6>
+                }
+
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p class="backgroundWhite border col-12 messageSize" style="color: red">No Results Found</p>
+}
+
+<p class="backgroundWhite border col-12 messageSize"><a asp-controller=@Model.Ctrl asp-action=@Model.Act1>Back to Books</a></p>
+

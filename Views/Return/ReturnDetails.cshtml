@@ -1,0 +1,23 @@
+﻿@model Bell.ViewModels.Return.ReturnDetailsViewModel
+
+<div class="container-fluid col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div class="row">
+        <img class="backgroundWhite mx-auto d-block border border-secondary rounded" src="/@Model.LocalBook.BookCoverThumbnailUrl" alt="book cover image">
+    </div>
+</div>
+
+<div class="container-fluid col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div class="backgroundWhite col-12">
+        <h3>@Model.LocalBook.Name</h3>
+        <h4>Author: @Model.LocalBook.Author</h4>
+        <p class="synposis"><b>Synopsis:</b> @Model.LocalBook.Description</p>
+
+        <form asp-controller="Return" asp-action="ReturnList" method="POST">
+            <input type="hidden" id="bookIdent" name="bookIdent" value=@Model.LocalBook.BookIdent />
+            <button type="submit" ondblclick="this.disabled=true;" style="display:inline;background-color:#90EE90;">Return</button>
+        </form>
+        
+        <p><a asp-controller="Return" asp-action="ReturnList">Back to Return Books</a></p>
+    </div>
+</div>
+

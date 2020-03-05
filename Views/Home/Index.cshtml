@@ -1,0 +1,54 @@
+﻿<title>Welcome to the Brussels English Language Library</title>
+<div>
+    <h4 class="textBackground" style="text-align: justify">
+        The Brussels English Language Library was established in 1971 to serve expats and anglophiles
+        across the Benelux nations. <br /> <br />
+        We host a wide range of books, from the Classics to Contemporary works, which originate from across
+        the English-speaking world. <br /> <br />
+        We operate as a postal library due to the dispersed locations of our users and consequently book loans are for
+        a one month period. <br /> <br />
+        Please feel free to Browse, Join the library, and of course Borrow Books!
+    </h4>
+</div>
+
+<div class="col-12 col-md-6">
+
+    <h3 class="textBackground" style="text-align: center"><a asp-controller="Peruse" asp-action="PeruseList">Browse books</a></h3>
+
+    <h3 class="textBackground" style="text-align: center"><a asp-controller="Borrow" asp-action="BorrowList">Borrow books</a></h3>
+
+    <h3 class="textBackground" style="text-align: center"><a asp-controller="Loan" asp-action="LoanList">My Loans</a></h3>
+
+</div>
+
+<div class="col-12 col-md-6">
+
+    <h3 class="textBackground" style="text-align: center"><a asp-controller="Renew" asp-action="RenewList">Renew loans</a></h3>
+
+    <h3 class="textBackground" style="text-align: center"><a asp-controller="Return" asp-action="ReturnList">Return books</a></h3>
+
+    <h3 class="textBackground" style="text-align: center"><a id="register" asp-area="Identity" asp-page="/Account/Register">Join library</a></h3>
+
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (User.IsInRole("Admin"))
+        {
+            <h3 class="textBackground" style="text-align: center"><a asp-controller="Admin" asp-action="Index">Administration</a></h3>
+        }
+    }
+
+</div>
+
+<div class="callout">
+    <div class="callout-header">Important</div>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <div class="callout-container">
+        <p>
+            This website is not a real library! <br>
+            It is a Web Development project undertaken for educational purposes.
+        </p>
+    </div>
+</div>
+
+

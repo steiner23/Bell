@@ -1,0 +1,10 @@
+﻿@model Bell.Models.Books.Book
+
+<a asp-controller=@ViewData["Ctrl"].ToString() asp-action=@ViewData["Act2"].ToString() asp-route-id="@Model.BookIdent">
+    <img class="listimages" src="/@Model.BookCoverThumbnailUrl" alt="book cover thumbnail image">
+</a>
+<div class="figure-caption">
+    <h6 class="booklabels"><a asp-controller=@ViewData["Ctrl"].ToString() asp-action=@ViewData["Act2"].ToString() asp-route-id="@Model.BookIdent">@Model.Name</a></h6>
+    <h6 class="booklabels">@Model.Author</h6>
+</div>
+

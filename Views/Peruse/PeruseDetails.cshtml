@@ -1,0 +1,25 @@
+﻿@model Bell.ViewModels.Peruse.PeruseDetailsViewModel
+
+<div class="container-fluid col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div class="row">
+        <img class="backgroundWhite mx-auto d-block border border-secondary rounded" src="/@Model.Book.BookCoverThumbnailUrl" alt="book cover image">
+    </div>
+</div>
+
+<div class="container-fluid col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div class="backgroundWhite col-12">
+        <p><h3>@Model.Book.Name</h3></p>
+        <p><h4>Author: @Model.Book.Author</h4></p>
+        <p class="synposis"><b>Synopsis:</b> @Model.Book.Description</p>
+        @if (@Model.Available == false)
+        {
+            <h6 class="booklabels" style="display:inline;background-color:#f17f84;">Out On Loan</h6>
+        }
+        else
+        {
+            <h6 class="booklabels" style="display:inline;background-color:#90EE90;">Available</h6>
+        }
+        <p><a asp-controller="Peruse" asp-action="PeruseList">Back to Books</a></p>
+    </div>
+</div>
+

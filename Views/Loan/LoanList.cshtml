@@ -1,0 +1,115 @@
+﻿@using Bell.Models.Books
+@model Bell.ViewModels.Loan.LoanViewModel
+
+<div class="alert alert-success col-12">
+    <strong>@Model.LoanMessage</strong>
+</div>
+
+@if (Model.showHistoric == false)
+{
+    <div>
+        <form asp-controller="Loan" asp-action="LoanList" method="POST">
+            <input type="hidden" id="includePrevious" name="includePrevious" value="true" />
+            <button type="submit" style="display: inline; background-color: #90EE90;">Include Previous Loans</button>
+        </form>
+    </div>
+}
+else
+{
+    <div>
+        <form asp-controller="Loan" asp-action="LoanList" method="POST">
+            <input type="hidden" id="includePrevious" name="includePrevious" value="false" />
+            <button type="submit" style="display: inline; background-color: #90EE90;">Hide Previous Loans</button>
+        </form>
+    </div>
+}
+
+@{
+    foreach (var loan in Model.LoansList)
+    {
+        <div class="container-fluid col-sm-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="backgroundWhite border border-secondary rounded figure-img">
+
+                @{
+                    Book localBook = new Book
+                    {
+                        BookIdent = loan.BookIdent,
+                        Name = loan.Name,
+                        Author = loan.Author,
+                        Description = loan.Description,
+                        BookCoverThumbnailUrl = loan.BookCoverThumbnailUrl,
+                    };
+                }
+
+                @await Html.PartialAsync("BookInformation", localBook,
+                new ViewDataDictionary(ViewData) { { "Ctrl", "Loan" }, { "Act1", "LoanList" },
+                    { "Act2", "LoanDetails" } })
+
+                @{;
+                    DateTime newDate = loan.ScheduleReturnDate;
+                    newDate = new DateTime(newDate.Ticks - (newDate.Ticks % TimeSpan.TicksPerSecond), newDate.Kind);
+                    string truncDate = newDate.ToString("dd/MM/yyyy");
+                }
+
+                @if (loan.ScheduleReturnDate > DateTime.Now)
+                {
+                    <h6 class="booklabels" style="display: inline; background-color: #90EE90;">Return Date: @truncDate</h6>
+                }
+                else
+                {
+                    <h6 class="booklabels" style="display: inline; background-color: #f17f84;">Overdue: @truncDate</h6>
+                }
+
+            </div>
+        </div>
+    }
+
+
+    @if (Model.showHistoric == true)
+    {
+        <div class="alert alert-success col-12 alertPosition">
+            <strong>@Model.LoanHistoricMessage</strong>
+        </div>
+
+        foreach (var loan in Model.LoansHistoricWithDetails)
+        {
+            <div class="container-fluid col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                <div class="backgroundWhite border border-secondary rounded figure-img">
+
+                    @{
+                        Book localBook = new Book
+                        {
+                            BookIdent = loan.BookIdent,
+                            Name = loan.Name,
+                            Author = loan.Author,
+                            Description = loan.Description,
+                            BookCoverThumbnailUrl = loan.BookCoverThumbnailUrl,
+                        };
+                    }
+
+                    @await Html.PartialAsync("BookInformation", localBook,
+                        new ViewDataDictionary(ViewData) { { "Ctrl", "Loan" }, { "Act1", "LoanList" }, { "Act2", "LoanDetails" } })
+
+                    @{;
+                        DateTime newDate = loan.BorrowDate;
+                        newDate = new DateTime(newDate.Ticks - (newDate.Ticks % TimeSpan.TicksPerSecond), newDate.Kind);
+                        string truncDate = newDate.ToString("dd/MM/yyyy");
+                        <h6 class="booklabels">Borrow Date: @truncDate</h6>
+                    }
+
+                    @{;
+                        DateTime newDate2 = loan.ActualReturnDate;
+                        newDate2 = new DateTime(newDate2.Ticks - (newDate2.Ticks % TimeSpan.TicksPerSecond), newDate2.Kind);
+                        string truncDate2 = newDate2.ToString("dd/MM/yyyy");
+                        <h6 class="booklabels">Return Date: @truncDate2</h6>
+                    }
+
+
+                </div>
+            </div>
+        }
+
+    }
+}
+
+

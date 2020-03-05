@@ -1,0 +1,189 @@
+﻿body {
+    background-image: url('/content/images/library-bookshelves.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100%;
+    width: 100%;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#welcometitle {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 25px;
+    background-color: white;
+    padding: 10px;
+    border: 3px;
+    border-radius: 25px;
+}
+
+.navbar-nav li {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.backgroundWhite {
+    background-color: white;
+    margin: 20px;
+    border: 3px;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.textBackground {
+    text-align: left;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 3px;
+    border-radius: 25px;
+}
+
+.headerBackground {
+    margin: auto;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 3px;
+    border-radius: 25px;
+    clear: right;
+}
+
+.roundedCorners {
+    border: 3px;
+    border-radius: 25px;
+}
+
+.clearForm {
+    clear: left;
+}
+
+.figure-img {
+    margin-bottom: 1rem;
+}
+
+.figure-caption{
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+
+.booklabels {
+    padding: 0;
+    margin: 0px !important;
+    display: block;
+    border: 1px;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+.listimages {
+    width: 160px;
+    height: 210px;
+}
+
+img.listimages {
+    text-align: center;
+    padding-top: 30px;
+}
+
+.image-container {
+    position: relative;
+}
+
+.bookimage {
+    position:relative;
+    right: 0;
+    left: 50px;
+    top: 30px;
+    bottom: 0;
+    margin: auto auto;
+}
+
+.synposis {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.formprops {
+    width: 100vh;
+    padding: 10px;
+    border: 3px;
+    background-color: white;
+}
+
+.callout {
+    position: fixed;
+    bottom: 35px;
+    right: 20px;
+    margin-left: 20px;
+    max-width: 300px;
+}
+
+.callout-header {
+    padding: 25px 15px;
+    background: #000;
+    font-size: 30px;
+    font-weight: bold;
+    color: red;
+}
+
+.callout-container {
+    padding: 15px;
+    background-color: #000;
+    color: red;
+}
+
+.closebtn {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: lightgrey;
+}
+
+.searchMenu {
+    padding: 10px;
+}
+
+.nav-link.btn-link {
+    color: #007BFF;
+}
+
+.messageSize {
+    font-size: 18px;
+}
+
+.alertPosition {
+    margin-top: 1rem;
+}
+
+footer {
+    position: fixed;
+    color: #ffffff;
+    background-color: #343a40;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1.5rem;
+    text-align: center;
+}
+
+.bottomMargin {
+    margin-bottom: 1.5rem;
+}

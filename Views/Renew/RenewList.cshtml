@@ -1,0 +1,62 @@
+﻿@using Bell.Models.Books
+@model Bell.ViewModels.Renew.RenewViewModel
+
+@if (Model.TextColorRed == false)
+{
+    <div class="alert alert-success col-12">
+        <strong>@Model.LoanMessage</strong>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger col-12">
+        <strong>@Model.LoanMessage</strong>
+    </div>
+}
+
+@{
+    foreach (var loan in Model.LoanRenewList)
+    {
+        <div class="container-fluid col-sm-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="backgroundWhite border border-secondary rounded figure-img">
+
+                @{
+                    Book localBook = new Book
+                    {
+                        BookIdent = loan.BookIdent,
+                        Name = loan.Name,
+                        Author = loan.Author,
+                        Description = loan.Description,
+                        BookCoverThumbnailUrl = loan.BookCoverThumbnailUrl
+                    };
+                }
+
+                @await Html.PartialAsync("BookInformation", localBook,
+                    new ViewDataDictionary(ViewData) {{"Ctrl", "Renew"}, {"Act1", "RenewList"}, {"Act2", "RenewDetails"}} )
+
+                @{
+                    DateTime newDate = loan.ScheduleReturnDate;
+                    newDate = new DateTime(newDate.Ticks - (newDate.Ticks % TimeSpan.TicksPerSecond), newDate.Kind);
+                    string truncDate = newDate.ToString("dd/MM/yyyy");
+                }
+
+                @if (loan.ScheduleReturnDate > DateTime.Now)
+                {
+                    <h6 class="booklabels" style="display: inline; background-color: #90EE90;">Return Date: @truncDate</h6>
+                }
+                else
+                {
+                    <h6 class="booklabels" style="display: inline; background-color: #f17f84;">Overdue: @truncDate</h6>
+                }
+
+                <form asp-controller="Renew" asp-action="RenewList" method="POST">
+                    <input type="hidden" id="bookIdent" name="bookIdent" value=@loan.BookIdent />
+                    <button type="submit" style="display: inline; background-color: #90EE90;">Renew</button>
+                </form>
+
+            </div>
+        </div>
+    }
+}
+
+
